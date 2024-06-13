@@ -1,3 +1,22 @@
+<!--
+  ~ /*
+  ~  * Licensed to the Apache Software Foundation (ASF) under one or more
+  ~  * contributor license agreements.  See the NOTICE file distributed with
+  ~  * this work for additional information regarding copyright ownership.
+  ~  * The ASF licenses this file to You under the Apache License, Version 2.0
+  ~  * (the "License"); you may not use this file except in compliance with
+  ~  * the License.  You may obtain a copy of the License at
+  ~  *
+  ~  *     http://www.apache.org/licenses/LICENSE-2.0
+  ~  *
+  ~  * Unless required by applicable law or agreed to in writing, software
+  ~  * distributed under the License is distributed on an "AS IS" BASIS,
+  ~  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  * See the License for the specific language governing permissions and
+  ~  * limitations under the License.
+  ~  */
+  -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,7 +91,7 @@
 <body>
 <ul class="layui-nav layui-bg-blue" style="text-align:center;">
     <li class="layui-nav-item">
-        Платформа управления iptables
+        iptables 管理平台
         <span class="ipc-version"></span>
     </li>
 </ul>
@@ -90,71 +109,71 @@
         </div>
     </div>
 </div>
-<!--Каталог-->
+<!--目录-->
 <div id="nav-dir-hide">
     <i class="layui-icon layui-icon-triangle-r" style="font-size: 20px;color:#1E9FFF"></i>
 </div>
 <div id="nav-dir" class="layui-layer-page layui-layer-dir" type="page" times="1" showtime="0" contype="object"
      style="position: fixed; top: 100px;float: right;max-width: 12%;background-color: #FFF">
-    <div class="layui-layer-title" style="cursor: move;">Каталог</div>
+    <div class="layui-layer-title" style="cursor: move;">目录</div>
     <div style="padding: 10px;">
         <ul class="site-dir layui-layer-wrap" style="display: block;" id="dir-list">
         </ul>
     </div>
     <span class="layui-layer-setwin"></span><span class="layui-layer-resize"></span>
 </div>
-<!--Функциональные кнопки-->
+<!--功能按钮-->
 <div id="global-func" class="global-func">
     <button id="clear-all-rule" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">
-        Очистить все правила таблиц
+        清空所有表规则
     </button>
     <br>
     <button id="clear-current-table-rule"
             class="layui-btn layui-btn-primary layui-btn-sm  layui-btn-radius ">
-        Очистить правила текущей таблицы
+        清空当前表规则
     </button>
     <br>
     <button id="clear-all-empty-chain"
             class="layui-btn layui-btn-primary layui-btn-sm  layui-btn-radius ">
-        Очистить все пустые цепочки
+        清空自定义空链
     </button>
     <br>
     <button id="clear-all-metrics" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">
-        Сбросить все счетчики
+        清零所有表计数
     </button>
     <br>
     <button id="clear-current-table-metrics"
             class="layui-btn layui-btn-primary layui-btn-sm  layui-btn-radius ">
-        Сбросить счетчики текущей таблицы
+        清零当前表计数
     </button>
     <br>
     <button id="self-iptables" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">
-        Просмотреть правила текущей таблицы
+        查看当前表规则
     </button>
     <br>
     <button id="exec-iptables" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">
-        Выполнить команду iptables
+        执行iptables命令
     </button>
     <br>
     <button id="export-all-rule" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">
-        Экспортировать правила iptables
+        导出iptables规则
     </button>
     <br>
     <button id="import-all-rule" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">
-        Импортировать правила iptables
+        导入iptables规则
     </button>
-    <!--    <br>-->
-    <!--    <a href="https://blog.xujianqq.com.cn/archives/61" target="_blank"-->
-    <!--       class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">Документация по iptables</a>-->
+<!--    <br>-->
+<!--    <a href="https://blog.xujianqq.com.cn/archives/61" target="_blank"-->
+<!--       class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius">iptables帮助文档</a>-->
 </div>
-<!--Копировать, экспортировать-->
+<!--复制、导出-->
 <div class="modal-footer" style="display:none;">
-    <a onfocus="this.blur();" id="createInvoteBtn" class="ipt-todo" href="javascript:void(0)">Создать и экспортировать Txt файл</a>
+    <a onfocus="this.blur();" id="createInvoteBtn" class="ipt-todo" href="javascript:void(0)">生成并导出Txt文件</a>
     <a onfocus="this.blur();" download="code.txt" id="createInvote" class="ipt-todo hide">code</a>
 </div>
 <textarea id="copy" style="display:none;"></textarea>
 <script src="/web/layui/layui.js"></script>
-<!--Ваш код Layui start-->
+<!--您的Layui代码start-->
 <script type="text/javascript">
     layui.use(['layer', 'table', 'element', 'code'], function () {
         var layer = layui.layer //弹层
@@ -166,13 +185,13 @@
         });
         let dirObj = $('#nav-dir');
         let dirHideObj = $('#nav-dir-hide');
-        // Правый край
+        // 右侧
         let globalObj = $('#global-func');
         function navDirStatus(display) {
             dirObj.css('display', display);
             dirHideObj.css('display', {none: 'block', block: 'none'}[display])
             if (display === 'none') {
-                // Добавление привязки событий
+                // 增加绑定事件
                 dirHideObj.hover(function () {
                     dirObj.css('display', 'block')
                 });
@@ -187,7 +206,7 @@
                 });
                 globalObj.css('right', '-120px')
             } else {
-                // Удаление привязанных событий
+                // 清除绑定的事件
                 dirObj.unbind('mouseleave');
                 dirHideObj.unbind('hover');
                 globalObj.unbind('hover')
@@ -233,14 +252,14 @@
                 }, 'json')
             },
             flushRule: (table = 'filter', chain = '', done) => {
-                let msg = 'Подтвердите очистку';
+                let msg = '确认清除';
                 if (!!table) {
-                    msg += ' таблицы ' + table
+                    msg += ' ' + table + ' 表'
                 }
                 if (!chain) {
-                    msg += ' всех правил?'
+                    msg += '所有规则？'
                 } else {
-                    msg += ' всех правил цепочки ' + chain + '?'
+                    msg += ' ' + chain + ' 链所有规则？'
                 }
                 layer.confirm(msg, function () {
                     $.post("/flushRule", {
@@ -248,7 +267,7 @@
                         chain: chain
                     }, function (res) {
                         if (res.code === 0) {
-                            layer.msg('Правила успешно очищены！')
+                            layer.msg('清除规则成功！')
                             if (done)
                                 done()
                             return false;
@@ -258,17 +277,17 @@
                 })
             },
             flushMetrics: (table, chain, id, done) => {
-                let msg = 'Подтвердите очистку';
+                let msg = '确认清除';
                 if (!!table) {
-                    msg += ' таблицы ' + table
+                    msg += ' ' + table + ' 表'
                 }
                 if (!!chain) {
-                    msg += ' цепочки ' + chain
+                    msg += ' ' + chain + ' 链'
                 }
                 if (!id) {
-                    msg += ' всех статистических данных?'
+                    msg += '所有统计数据？'
                 } else {
-                    msg += ' статистических данных правила № ' + id + '?'
+                    msg += '第 ' + id + '条规则的统计数据？'
                 }
 
                 layer.confirm(msg, function () {
@@ -278,7 +297,7 @@
                         id: id,
                     }, function (res) {
                         if (res.code === 0) {
-                            layer.msg('Статистические данные успешно очищены！')
+                            layer.msg('清除统计数据成功！')
                             if (done)
                                 done()
                             return false;
@@ -288,7 +307,7 @@
                 })
             },
             deleteRule: (table, chain, id, done) => {
-                let msg = 'Подтвердите очистку правила № ' + id + ' цепочки ' + chain + ' таблицы ' + table + '?';
+                let msg = '确认清除 ' + table + ' 表 ' + chain + ' 链的第 ' + id + ' 条规则？';
                 layer.confirm(msg, function () {
                     $.post("/deleteRule", {
                         table: table,
@@ -296,7 +315,7 @@
                         id: id,
                     }, function (res) {
                         if (res.code === 0) {
-                            layer.msg('Правило успешно очищено！')
+                            layer.msg('清除规则成功！')
                             if (done)
                                 done()
                             return false;
@@ -357,7 +376,7 @@
                     rule: rule,
                 }, function (res) {
                     if (res.code === 0) {
-                        layer.msg('Правила iptables успешно импортированы！')
+                        layer.msg('导入iptables规则成功！')
                         if (done)
                             done()
                         return false;
@@ -366,10 +385,10 @@
                 }, 'json')
             },
             flushEmptyCustomChain: (done) => {
-                layer.confirm('Подтвердите очистку всех пользовательских пустых цепочек？', function () {
+                layer.confirm('确认清除用户自定义的所有空链？', function () {
                     $.post("/flushEmptyCustomChain", {}, function (res) {
                         if (res.code === 0) {
-                            layer.msg('Пользовательские пустые цепочки успешно очищены！')
+                            layer.msg('清空自定义空链成功！')
                             if (done)
                                 done()
                             return false;
@@ -386,13 +405,13 @@
                     layer.alert(res.msg)
                     return false;
                 }
-                // Полное обновление
+                // 全量拉取
                 if (!chainName) {
                     let bodyObj = $('#table-body');
                     bodyObj.html('');
                     if (res.data.system.length > 0) {
                         bodyObj.append(
-                            '<blockquote class="layui-elem-quote" id="system">Системные цепочки</blockquote>')
+                            '<blockquote class="layui-elem-quote" id="system">原生链</blockquote>')
                         for (k in res.data.system) {
                             let html = tableHTML('system', tableName, res.data.system[k])
                             bodyObj.append(html)
@@ -401,18 +420,18 @@
                     if (res.data.custom.length > 0) {
                         bodyObj.append('<hr class="layui-border-blue">')
                         bodyObj.append(
-                            '<blockquote class="layui-elem-quote" id="custom">Пользовательские цепочки</blockquote>'
+                            '<blockquote class="layui-elem-quote" id="custom">自定义链</blockquote>'
                         )
                         for (k in res.data.custom) {
                             let html = tableHTML('custom', tableName, res.data.custom[k])
                             bodyObj.append(html)
                         }
                     }
-                    // Установить каталог
+                    // 设置目录
                     $('#dir-list').html(dirHTML(res.data))
                     return true;
                 }
-                // Частичное обновление
+                // 局部刷新
                 let bodyObj = $('#' + chainName);
                 let type = bodyObj.data('type');
                 bodyObj.html('');
@@ -423,7 +442,7 @@
                 let html = tableHTML(type, tableName, res.data[type][0]);
                 bodyObj.html($(html).html());
                 if (isAlert)
-                    layer.msg('Успешно обновлено');
+                    layer.msg('刷新成功');
             })
         }
 
@@ -437,7 +456,7 @@
             loadListRule(tableName)
         });
 
-        // Обновить цепочку
+        // 刷新链
         $(document).on('click', '.chain-reload', function () {
             let tableName = $(this).parent().data('table');
             let chainName = $(this).parent().data('chain');
@@ -446,27 +465,27 @@
         $(document).on('click', '.chain-insert', function () {
             let tableName = $(this).parent().data('table');
             let chainName = $(this).parent().data('chain');
-            execView('Вставить правило', 'iptables -t ' + tableName + ' -I ' + chainName, 'Введите правило', '', function (
+            execView('插入规则', 'iptables -t ' + tableName + ' -I ' + chainName, '请输入规则', '', function (
                 val) {
                 iptables.exec("-t " + tableName + ' -I ' + chainName + ' ' + val, function () {
                     loadListRule(tableName, chainName, false)
-                    layer.msg('Правило успешно вставлено！')
+                    layer.msg('插入规则成功！')
                 })
             })
         })
         $(document).on('click', '.chain-append', function () {
             let tableName = $(this).parent().data('table');
             let chainName = $(this).parent().data('chain');
-            execView('Добавить правило', 'iptables -t ' + tableName + ' -A ' + chainName, 'Введите правило', '', function (
+            execView('添加规则', 'iptables -t ' + tableName + ' -A ' + chainName, '请输入规则', '', function (
                 val) {
                 iptables.exec("-t " + tableName + ' -A ' + chainName + ' ' + val, function () {
                     loadListRule(tableName, chainName, false)
-                    layer.msg('Правило успешно добавлено！')
+                    layer.msg('添加规则成功！')
                 })
             })
         });
 
-        // Очистить правила цепочки указанной таблицы
+        // 清空指定表的链规则
         $(document).on('click', '.chain-flush', function () {
             let tableName = $(this).parent().data('table');
             let chainName = $(this).parent().data('chain');
@@ -474,7 +493,7 @@
                 loadListRule(tableName, chainName, false)
             })
         })
-        // Очистить статистику цепочки указанной таблицы
+        // 清空指定表的链统计数据
         $(document).on('click', '.chain-flush-metrics', function () {
             let tableName = $(this).parent().data('table');
             let chainName = $(this).parent().data('chain');
@@ -490,16 +509,16 @@
                 loadListRule(tableName, chainName, false)
             })
         });
-        // Просмотреть исходные команды
+        // 查看原始命令
         $(document).on('click', '.chain-exec', function () {
             let tableName = $(this).parent().data('table');
             let chainName = $(this).parent().data('chain');
             iptables.listExec(tableName, chainName, function (res) {
                 let html = '<pre class="layui-code" lay-title="shell" lay-height="" lay-skin="" lay-encode="">#code#</pre>'
-                layer.alert(html.replace('#code#', res.data), {title: 'Таблица: ' + tableName + ' Цепочка: ' + chainName})
+                layer.alert(html.replace('#code#', res.data), {title: '表: ' + tableName + ' 链: ' + chainName})
             })
         })
-        // Одним щелчком мыши изменить правило
+        // 单击修改规则
         $(document).on('click', 'tbody>tr>td:first-child', function () {
             let obj = $(this).parent().find('td:last-child button');
             let tableName = obj.data('table');
@@ -508,16 +527,16 @@
             iptables.getRuleInfo(tableName, chainName, id, function (info) {
                 info = info.replace('-A ', '-R ')
                 info = info.replace(chainName, chainName + ' ' + id + ' ')
-                execView('Изменить правило № ' + id + ' цепочки ' + chainName + ' таблицы ' + tableName, 'iptables -t ' + tableName, '', info, function (
+                execView('修改 ' + tableName + '表, ' + chainName + '链, 第' + id + '条规则', 'iptables -t ' + tableName, '', info, function (
                     val) {
                     iptables.exec("-t " + tableName + ' ' + val, function () {
                         loadListRule(tableName, chainName, false)
-                        layer.msg('Правило успешно изменено！')
+                        layer.msg('修改规则成功！')
                     })
                 })
             })
         });
-        // Очистить одно правило
+        // 清除单条规则
         $(document).on('click', '.delete-rule', function () {
             let tableName = $(this).data('table');
             let chainName = $(this).data('chain');
@@ -526,14 +545,14 @@
                 loadListRule(tableName, chainName, false)
             })
         });
-        // Очистить все правила
+        // 清除所有规则
         $('#clear-all-rule').click(function () {
             let tableName = $(this).parent().data('table');
             iptables.flushRule('', '', function () {
                 loadListRule(tableName, '', false)
             })
         })
-        // Очистить правила текущей таблицы
+        // 清除当前表规则
         $('#clear-current-table-rule').click(function () {
             let tableName = $('.layui-this').html();
             iptables.flushRule(tableName, '', function () {
@@ -548,13 +567,13 @@
                 html = html.replace('#code#', data)
                 layer.open({
                     type: 1,
-                    title: 'Команды для всех правил',
-                    btn: ['Копировать', 'Экспортировать', 'Ок'],
+                    title: '全部规则命令',
+                    btn: ['复制', '导出', '确定'],
                     content: html,
                     area: ['auto', '600px'],
                     btn1: function () {
                         copyText($, data);
-                        layer.msg('Успешно скопировано, можно вставить в файл！', {icon: 1});
+                        layer.msg('复制成功，可直接粘贴至文件！', {icon: 1});
                     },
                     btn2: function () {
                         fileName = 'iptable-save.txt';
@@ -575,7 +594,7 @@
                 formType: 2,
                 value: '',
                 maxlength: 1024 * 1024 * 4,
-                title: 'Вставьте правила iptables',
+                title: '粘贴iptables规则',
                 area: ['800px', '350px'] //自定义文本域宽高
             }, function (value, index, elem) {
                 let tableName = $('.layui-this').html();
@@ -585,7 +604,7 @@
                 })
             });
         })
-        // Сбросить все счетчики
+        // 清零所有链计数
         $('#clear-all-metrics').click(function () {
             // let tableName = $(this).parent().data('table');
             // let chainName = $(this).parent().data('chain');
@@ -594,14 +613,14 @@
                 loadListRule(tableName, '', false)
             })
         })
-        // Сбросить счетчики текущей таблицы
+        // 清零当前表计数
         $('#clear-current-table-metrics').click(function () {
             let tableName = $('.layui-this').html();
             iptables.flushMetrics(tableName, '', '', function () {
                 loadListRule(tableName, '', false)
             })
         });
-        // Очистить все пользовательские пустые цепочки
+        // 清空自定义空链
         $('#clear-all-empty-chain').click(function () {
             let tableName = $('.layui-this').html();
             iptables.flushEmptyCustomChain(function () {
@@ -610,14 +629,14 @@
         });
         $('#exec-iptables').click(function () {
             let tableName = $('.layui-this').html();
-            execView('Выполнить команду iptables', 'iptables', 'Введите команду', '', function (val) {
+            execView('执行iptables命令', 'iptables', '输入命令', '', function (val) {
                 iptables.exec(val, function (res) {
                     // loadListRule(tableName, '', false)
                     if (res.data) {
                         let html = '<pre class="layui-code" lay-title="shell" lay-height="" lay-skin="" lay-encode="">#code#</pre>'
-                        layer.alert(html.replace('#code#', res.data), {title: 'Команда выполнена успешно'})
+                        layer.alert(html.replace('#code#', res.data), {title: '命令执行成功'})
                     } else {
-                        layer.msg('Команда выполнена успешно')
+                        layer.msg('命令执行成功')
                     }
                 })
             })
@@ -626,7 +645,7 @@
             let tableName = $('.layui-this').html();
             iptables.listExec(tableName, '', function (res) {
                 let html = '<pre class="layui-code" lay-title="shell" lay-height="" lay-skin="" lay-encode="">#code#</pre>'
-                layer.alert(html.replace('#code#', res.data), {title: 'Таблица: ' + tableName})
+                layer.alert(html.replace('#code#', res.data), {title: '表: ' + tableName})
             })
         })
     });
@@ -637,12 +656,12 @@
   <legend style="font-size: 16px;">#title#</legend>
   <div class="layui-field-box">
                 <div  data-table="#table-name#" data-chain="#chain-name#">
-                    <button type="button" class="layui-btn layui-btn-sm chain-insert">Вставить</button>
-                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary chain-append">Добавить</button>
-                    <button type="button" class="layui-btn layui-btn-sm layui-btn-warm chain-flush-metrics">Сбросить счетчики</button>
-                    <button type="button" class="layui-btn layui-btn-sm layui-btn-danger chain-flush">Очистить правила</button>
-                    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal chain-reload" >Обновить</button>
-                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary layui-border-green chain-exec" >Просмотреть команды</button>
+                    <button type="button" class="layui-btn layui-btn-sm chain-insert">插入</button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary chain-append">添加</button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-warm chain-flush-metrics">清零计数</button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-danger chain-flush">清空规则</button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal chain-reload" >刷新</button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary layui-border-green chain-exec" >查看命令</button>
                 </div>
                 <table class="layui-table" >
                     <thead>
@@ -673,11 +692,11 @@
         let title = '';
         switch (type) {
             case 'system':
-                title = "Цепочка: " + data.title.chain + " &nbsp;Политика по умолчанию: " + data.title.policy + " &nbsp;Количество пакетов: " + data
-                    .title.packets + " &nbsp;Количество байтов: " + data.title.bytes
+                title = "链: " + data.title.chain + " &nbsp;默认策略: " + data.title.policy + " &nbsp;经过的包数量: " + data
+                    .title.packets + " &nbsp;字节数: " + data.title.bytes
                 break;
             case 'custom':
-                title = "Цепочка: " + data.title.chain + " &nbsp;Количество ссылок: " + data.title.references
+                title = "链: " + data.title.chain + " &nbsp;被引用数量: " + data.title.references
                 break;
 
         }
@@ -696,8 +715,8 @@
             td += "<td>" + data.list[k].destination + "</td>";
             td += "<td>" + data.list[k].action + "</td>";
             td += "<td><div class='layui-btn-group'>" +
-                "<button class='layui-btn layui-btn-xs layui-btn-primary flush-metrics' data-table='" + tableName + "' data-chain='" + data.title.chain + "' data-id='" + data.list[k].num + "'>Сбросить</button>" +
-                " <button class='layui-btn layui-btn-xs layui-btn-primary delete-rule' data-table='" + tableName + "' data-chain='" + data.title.chain + "' data-id='" + data.list[k].num + "'>Удалить</button>" +
+                "<button class='layui-btn layui-btn-xs layui-btn-primary flush-metrics' data-table='" + tableName + "' data-chain='" + data.title.chain + "' data-id='" + data.list[k].num + "'>清零</button>" +
+                " <button class='layui-btn layui-btn-xs layui-btn-primary delete-rule' data-table='" + tableName + "' data-chain='" + data.title.chain + "' data-id='" + data.list[k].num + "'>删除</button>" +
                 "</div></td>";
             td += "</tr>";
         }
@@ -711,7 +730,7 @@
     function dirHTML(data) {
         let html = '';
         if (data.system.length > 0) {
-            html += '<li><a href="#system"><cite>Системные цепочки</cite></a></li><ul style="margin-left: 15px;">'
+            html += '<li><a href="#system"><cite>原生链</cite></a></li><ul style="margin-left: 15px;">'
             for (k in data.system) {
                 let name = data.system[k].title.chain;
                 html += '<li><a href="#' + name + '"><cite>' + name + '</cite></a></li>'
@@ -719,7 +738,7 @@
             html += '</ul>'
         }
         if (data.custom.length > 0) {
-            html += '<li><a href="#custom"><cite>Пользовательские цепочки</cite></a></li><ul style="margin-left: 15px;">'
+            html += '<li><a href="#custom"><cite>自定义链</cite></a></li><ul style="margin-left: 15px;">'
             for (k in data.custom) {
                 let name = data.custom[k].title.chain;
                 html += '<li><a href="#' + name + '"><cite>' + name + '</cite></a></li>'
@@ -730,12 +749,12 @@
     }
 
     /**
-     * Интерфейс выполнения команд
-     * @param title string Заголовок страницы
-     * @param prefix string Префикс команды в поле ввода
-     * @param placeholder string Подсказка в поле ввода команды
-     * @param val string Значение команды в поле ввода
-     * @param confirm function Колбэк после выполнения команды
+     * 执行命令的界面
+     * @param title string 页面标题
+     * @param prefix string 输入框命令前缀
+     * @param placeholder string 输入框命令提示
+     * @param val string 输入框命令
+     * @param confirm function 命令完成回调
      */
     function execView(title, prefix, placeholder, val, confirm) {
         layer.open({
@@ -753,7 +772,7 @@
                 '</div>' +
                 '</div>' +
                 '</div>',
-            btn: ['Подтвердить', 'Отмена'],
+            btn: ['确认', '取消'],
             btn1: function (index, layero) {
                 confirm(layero.find('input').val());
                 layer.close(index);
@@ -765,8 +784,8 @@
     }
 
     /**
-     * Копировать текст в буфер обмена
-     * @param str Текст для копирования
+     * 将文本内容复制到剪切板
+     * @param str 复制内容
      */
     function copyText(jq, str) {
         jq('#copy').text(str).show();
